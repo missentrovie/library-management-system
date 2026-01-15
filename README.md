@@ -26,6 +26,8 @@ such as stock tracking, loan management, and analytical queries.
 - Partial unique index prevents multiple active loans of the same book
   by the same member.
 - Partial indexes are used to optimize active loan queries.
+- Reporting views for active loans, overdue items,
+  popular books, and member loan history
 
 
 ## Database Structure
