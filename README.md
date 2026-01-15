@@ -1,42 +1,65 @@
-erDiagram
-    authors ||--o{ book_authors : ""
-    books ||--o{ book_authors : ""
-    books }o--|| categories : ""
-    members ||--o{ loans : ""
-    books ||--o{ loans : ""
+# 📚 Library Management System (PostgreSQL)
 
-    authors {
-        SERIAL author_ID PK
-        VARCHAR(150) full_name
-    }
-    categories {
-        SERIAL category_ID PK
-        VARCHAR(100) name
-    }
-    books {
-        SERIAL book_ID PK
-        VARCHAR(255) title
-        VARCHAR(20) ISBN
-        INT publication_year
-        INT category_ID FK
-        INT total_copies
-        INT available_copies
-    }
-    book_authors {
-        INT book_ID PK,FK
-        INT author_ID PK,FK
-    }
-    members {
-        SERIAL member_ID PK
-        VARCHAR(150) full_name
-        VARCHAR(150) email
-        TIMESTAMP created_at
-    }
-    loans {
-        SERIAL loan_ID PK
-        INT book_ID FK
-        INT member_ID FK
-        DATE loan_date
-        DATE due_date
-        DATE return_date
-    }
+A relational **Library Management System** built with PostgreSQL, focusing on
+data integrity, automation via triggers, and reporting through views.
+
+This project demonstrates practical database design for real-world scenarios
+such as stock tracking, loan management, and analytical queries.
+
+---
+
+## Features
+- Real-time book stock management (`available_copies`)
+- Automatic stock updates using PostgreSQL triggers
+- Member and loan management
+- Multi-author book support (many-to-many)
+- Reporting views:
+      Active loans
+      Overdue loans
+      Most popular books
+- Indexes for query performance
+- Data integrity via constraints and checks
+
+## Database Structure
+### Core Tables
+- `books`, `authors`, `categories`
+- `members`, `loans`
+- `book_authors` (many-to-many relationship)
+### Automation
+- Triggers handle:
+      Decreasing stock on loan creation
+      Increasing stock on book return
+### Reporting
+- SQL views provide ready-to-use reports without complex queries.
+
+
+
+## Setup
+Run the SQL scripts in the following order:
+```bash
+psql -U <user> -d <database> -f sql/01_schema.sql
+psql -U <user> -d <database> -f sql/02_triggers.sql
+psql -U <user> -d <database> -f sql/03_views.sql
+psql -U <user> -d <database> -f sql/04_sample_data.sql
+
+
+Example Queries
+SELECT * FROM active_loans;
+SELECT * FROM overdue_loans;
+SELECT title, available_copies FROM books WHERE available_copies > 0;
+
+🛠️ Possible Improvements
+Fine calculation system for overdue loans
+Role-based access control
+Audit logging
+REST API integration
+Transaction-level concurrency handling
+
+
+
+This project helped reinforce:
+Database normalization
+Trigger-based automation
+Index optimization
+Business-oriented SQL reporting
+Data consistency and integrity
