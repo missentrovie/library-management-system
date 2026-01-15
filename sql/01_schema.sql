@@ -29,14 +29,17 @@ CREATE TABLE members (
     email VARCHAR(150) UNIQUE NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP );
 
+
 CREATE TABLE loans (
     loan_ID SERIAL PRIMARY KEY,
-	book_ID INT NOT NULL REFERENCES books(book_ID) ON DELETE RESTRICT,
-	member_ID INT NOT NULL REFERENCES members(member_ID) ON DELETE RESTRICT,
-
+    book_ID INT NOT NULL REFERENCES books(book_ID) ON DELETE RESTRICT,
+    member_ID INT NOT NULL REFERENCES members(member_ID) ON DELETE RESTRICT,
     loan_date DATE DEFAULT CURRENT_DATE,
     due_date DATE NOT NULL,
-    return_date DATE );
+    return_date DATE,
+    CHECK (due_date >= loan_date)
+);
+
 
 CREATE INDEX idx_books_ISBN ON books(ISBN) ;
 	
