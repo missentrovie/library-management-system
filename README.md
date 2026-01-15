@@ -14,11 +14,16 @@ such as stock tracking, loan management, and analytical queries.
 - Member and loan management
 - Multi-author book support (many-to-many)
 - Reporting views:
-      Active loans
-      Overdue loans
-      Most popular books
+     - Active loans
+     - Overdue loans
+     - Most popular books
 - Indexes for query performance
 - Data integrity via constraints and checks
+- Foreign key constraints include ON DELETE rules to prevent orphan records
+  and ensure referential integrity.
+- Foreign key constraints include ON DELETE rules to prevent orphan records
+  and ensure referential integrity.
+
 
 ## Database Structure
 ### Core Tables
