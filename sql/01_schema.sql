@@ -11,15 +11,17 @@ CREATE TABLE books (
     title VARCHAR(255) NOT NULL,
     ISBN VARCHAR(20) UNIQUE NOT NULL,
     publication_year INT CHECK (publication_year > 0),
-    category_ID INT REFERENCES categories(category_ID),
+    category_ID INT REFERENCES categories(category_ID) ON DELETE SET NULL,
     total_copies INT NOT NULL DEFAULT 1,
     available_copies INT NOT NULL DEFAULT 1,
     CONSTRAINT check_copies CHECK (available_copies BETWEEN 0 AND total_copies) );
 
+
 CREATE TABLE book_authors (
-    book_ID INT REFERENCES books(book_ID),
-    author_ID INT REFERENCES authors(author_ID),
+    book_ID INT REFERENCES books(book_ID) ON DELETE CASCADE,
+    author_ID INT REFERENCES authors(author_ID) ON DELETE CASCADE,
     PRIMARY KEY (book_ID, author_ID) );
+
 
 CREATE TABLE members (
     member_ID SERIAL PRIMARY KEY,
@@ -29,8 +31,9 @@ CREATE TABLE members (
 
 CREATE TABLE loans (
     loan_ID SERIAL PRIMARY KEY,
-    book_ID INT NOT NULL REFERENCES books(book_ID),
-    member_ID INT NOT NULL REFERENCES members(member_ID),
+	book_ID INT NOT NULL REFERENCES books(book_ID) ON DELETE RESTRICT,
+	member_ID INT NOT NULL REFERENCES members(member_ID) ON DELETE RESTRICT,
+
     loan_date DATE DEFAULT CURRENT_DATE,
     due_date DATE NOT NULL,
     return_date DATE );
