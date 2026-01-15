@@ -2,9 +2,11 @@ CREATE TABLE authors (
     author_ID SERIAL PRIMARY KEY,
     full_name VARCHAR(150) NOT NULL );
 
+
 CREATE TABLE categories (
     category_ID SERIAL PRIMARY KEY,
     name VARCHAR(100) UNIQUE NOT NULL );
+
 
 CREATE TABLE books (
     book_ID SERIAL PRIMARY KEY,
@@ -37,8 +39,7 @@ CREATE TABLE loans (
     loan_date DATE DEFAULT CURRENT_DATE,
     due_date DATE NOT NULL,
     return_date DATE,
-    CHECK (due_date >= loan_date)
-);
+    CHECK (due_date >= loan_date) );
 
 
 CREATE INDEX idx_books_ISBN ON books(ISBN) ;
